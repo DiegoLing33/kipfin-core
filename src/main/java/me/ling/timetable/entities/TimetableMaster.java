@@ -17,51 +17,79 @@
  *
  */
 
-package me.ling.core.entities.timetable;
+package me.ling.timetable.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 /**
- * Элемент расписания
+ * Мастер-расписание
  */
-public class TimetableItemEntity {
+public class TimetableMaster {
 
     @JsonProperty
-    private final String group;
-
-    @JsonProperty
-    private final String[] subjects;
-
+    private final Integer weekIndex;
     @JsonProperty
     private final Integer dayOfWeekIndex;
+    @JsonProperty
+    private final String date;
+    @JsonProperty
+    private final List<GroupWithSubjects> timetable;
+    @JsonProperty
+    private final List<TeacherWithSubjects> teachers;
 
-    public TimetableItemEntity(String group, String[] subjects, Integer dayOfWeekIndex) {
-        this.group = group;
-        this.subjects = subjects;
+    public TimetableMaster(Integer weekIndex, Integer dayOfWeekIndex, String date, List<GroupWithSubjects> timetable,
+                           List<TeacherWithSubjects> teachers) {
+        this.weekIndex = weekIndex;
         this.dayOfWeekIndex = dayOfWeekIndex;
+        this.date = date;
+        this.timetable = timetable;
+        this.teachers = teachers;
     }
 
     /**
-     * Возвращает группу
-     * @return группа
+     * Возвращает индекс недели для определения четности/нечетности
+     *
+     * @return индекс недели
      */
-    public String getGroup() {
-        return group;
+    public Integer getWeekIndex() {
+        return weekIndex;
     }
 
     /**
-     * Возвращает массив предметов
-     * @return массив предметов
-     */
-    public String[] getSubjects() {
-        return subjects;
-    }
-
-    /**
-     * Возвращает день недели
-     * @return день недели (0...6)
+     * Возвращает индекс дня недели
+     *
+     * @return индекс дня недели 0...6
      */
     public Integer getDayOfWeekIndex() {
         return dayOfWeekIndex;
+    }
+
+    /**
+     * Возвращает дату
+     *
+     * @return дата расписания
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * Возвращает расписание для студентов
+     *
+     * @return объекты расписания
+     */
+    public List<GroupWithSubjects> getTimetable() {
+        return timetable;
+    }
+
+    /**
+     * Возвращает расписание для преподавателей
+     *
+     * @return аудитории
+     */
+    public List<TeacherWithSubjects> getTeachers() {
+        return teachers;
     }
 }

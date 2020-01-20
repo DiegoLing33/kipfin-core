@@ -17,77 +17,67 @@
  *
  */
 
-package me.ling.core.entities.timetable;
+package me.ling.timetable.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Мастер-расписание
+ * Элемент аудиторий
  */
-public class TimetableMaster {
+public class ClassroomsItem {
 
     @JsonProperty
-    private final Integer weekIndex;
-    @JsonProperty
-    private final Integer dayOfWeekIndex;
-    @JsonProperty
-    private final String date;
-    @JsonProperty
-    private final TimetableWithClassroomItemEntity[] timetable;
-    @JsonProperty
-    private final ClassroomsItem[] classrooms;
+    private final String where;
 
-    public TimetableMaster(Integer weekIndex, Integer dayOfWeekIndex, String date,
-                           TimetableWithClassroomItemEntity[] timetable, ClassroomsItem[] classrooms) {
-        this.weekIndex = weekIndex;
-        this.dayOfWeekIndex = dayOfWeekIndex;
-        this.date = date;
-        this.timetable = timetable;
-        this.classrooms = classrooms;
+    @JsonProperty
+    private final String who;
+
+    @JsonProperty
+    private final Integer index;
+
+    @JsonProperty
+    private final String group;
+
+    public ClassroomsItem(String where, String who, String group, Integer index) {
+        this.where = where;
+        this.who = who;
+        this.group = group;
+        this.index = index;
     }
 
     /**
-     * Возвращает индекс недели для определения четности/нечетности
+     * Возвращает аудиторию
      *
-     * @return индекс недели
+     * @return аудитория
      */
-    public Integer getWeekIndex() {
-        return weekIndex;
+    public String getWhere() {
+        return where;
     }
 
     /**
-     * Возвращает индекс дня недели
+     * Возвращает преподавателя
      *
-     * @return индекс дня недели 0...6
+     * @return имя преподавателя
      */
-    public Integer getDayOfWeekIndex() {
-        return dayOfWeekIndex;
+    public String getWho() {
+        return who;
     }
 
     /**
-     * Возвращает дату
+     * Возвращает индекс
      *
-     * @return дата расписания
+     * @return индекс
      */
-    public String getDate() {
-        return date;
+    public Integer getIndex() {
+        return index;
     }
 
     /**
-     * Возвращает расписание для студентов
+     * Возвращает группу
      *
-     * @return объекты расписания
+     * @return группа
      */
-    public TimetableWithClassroomItemEntity[] getTimetable() {
-        return timetable;
-    }
-
-    /**
-     * Возвращает расписание для преподавателей
-     *
-     * @return аудитории
-     */
-    public ClassroomsItem[] getClassrooms() {
-        return classrooms;
+    public String getGroup() {
+        return group;
     }
 }

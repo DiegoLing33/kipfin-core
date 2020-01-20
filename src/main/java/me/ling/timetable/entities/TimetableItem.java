@@ -17,51 +17,53 @@
  *
  */
 
-package me.ling.core.entities.timetable;
+package me.ling.timetable.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 /**
- * Элемент аудиторий
+ * Элемент расписания
  */
-public class ClassroomsItem {
+public class TimetableItem {
 
     @JsonProperty
-    private final String where;
+    private final String group;
 
     @JsonProperty
-    private final String who;
+    private final List<String> subjects;
 
     @JsonProperty
-    private final Integer index;
+    private final Integer dayOfWeekIndex;
 
-    public ClassroomsItem(String where, String who, Integer index) {
-        this.where = where;
-        this.who = who;
-        this.index = index;
+    public TimetableItem(String group, List<String> subjects, Integer dayOfWeekIndex) {
+        this.group = group;
+        this.subjects = subjects;
+        this.dayOfWeekIndex = dayOfWeekIndex;
     }
 
     /**
-     * Возвращает аудиторию
-     * @return аудитория
+     * Возвращает группу
+     * @return группа
      */
-    public String getWhere() {
-        return where;
+    public String getGroup() {
+        return group;
     }
 
     /**
-     * Возвращает преподавателя
-     * @return имя преподавателя
+     * Возвращает массив предметов
+     * @return массив предметов
      */
-    public String getWho() {
-        return who;
+    public List<String> getSubjects() {
+        return subjects;
     }
 
     /**
-     * Возвращает индекс
-     * @return индекс
+     * Возвращает день недели
+     * @return день недели (0...6)
      */
-    public Integer getIndex() {
-        return index;
+    public Integer getDayOfWeekIndex() {
+        return dayOfWeekIndex;
     }
 }

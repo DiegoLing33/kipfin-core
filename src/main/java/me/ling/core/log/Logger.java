@@ -31,7 +31,8 @@ public final class Logger {
 
     // Литералы
     public static final String YES = String.format("[ %s ]", LoggerColors.getColoredString(LoggerColors.ANSI_GREEN, "YES"));
-    public static final String NO = String.format("[ %s ]", LoggerColors.getColoredString(LoggerColors.ANSI_RED, "NO"));
+    public static final String NO = String.format("[ %s ]", LoggerColors.getColoredString(LoggerColors.ANSI_RED, "NO "));
+    public static final String WAIT = String.format("[ %s ]", LoggerColors.getColoredString(LoggerColors.ANSI_YELLOW, "~~~"));
 
     /**
      * Тсандартный фильтр имени логгера
@@ -42,6 +43,7 @@ public final class Logger {
     private static String filterName(String name) {
         if (name.equals("Builder")) return LoggerColors.getColoredString(LoggerColors.ANSI_CYAN, name);
         if (name.equals("Tester")) return LoggerColors.getColoredString(LoggerColors.ANSI_RED, name);
+        if (name.equals("Parser")) return LoggerColors.getColoredString(LoggerColors.ANSI_PURPLE, name);
         if (name.equals("Logger")) return LoggerColors.getColoredString(LoggerColors.ANSI_BLUE, name);
         return name;
     }
@@ -65,7 +67,7 @@ public final class Logger {
      */
     public static String getLoggerString(String name, Object... message) {
         LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         Object[] strings = Arrays.stream(message).map(o -> {
             if (o instanceof Boolean) return ((Boolean) o) ? YES : NO;
             return o.toString();

@@ -17,7 +17,7 @@
  *
  */
 
-package me.ling.core.entities.timetable;
+package me.ling.timetable.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,10 +26,10 @@ import java.util.Map;
 /**
  * Элемент расписания с аудиториями и преподавателями
  */
-public class TimetableWithClassroomItemEntity {
+public class GroupSubject {
 
     @JsonProperty
-    private final String group;
+    private final String title;
 
     @JsonProperty
     private final Map<String, String> who;
@@ -37,29 +37,36 @@ public class TimetableWithClassroomItemEntity {
     @JsonProperty
     private final Integer index;
 
-    public TimetableWithClassroomItemEntity(String group, Map<String, String> who, Integer index) {
-        this.group = group;
+    public GroupSubject(String title, Map<String, String> who, Integer index) {
+        this.title = title;
         this.who = who;
         this.index = index;
     }
 
     /**
-     * Возвращает группу
-     * @return Группа пользователя
-     */
-    public String getGroup() {
-        return group;
-    }
-
-    /**
      * Возвращает информацию о преподавателе и аудитории
+     *
      * @return связка Преподаваетль->Аудитория
      */
     public Map<String, String> getWho() {
         return who;
     }
 
+    /**
+     * Возвращает индекс пары
+     *
+     * @return индекс пары
+     */
     public Integer getIndex() {
         return index;
+    }
+
+    /**
+     * Возвращает название пары
+     *
+     * @return - название пары
+     */
+    public String getTitle() {
+        return title;
     }
 }
