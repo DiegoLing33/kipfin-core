@@ -1,3 +1,22 @@
+/*
+ *
+ *   ██████╗░██╗███████╗░██████╗░░█████╗░  ██╗░░░░░██╗███╗░░██╗░██████╗░
+ *   ██╔══██╗██║██╔════╝██╔════╝░██╔══██╗  ██║░░░░░██║████╗░██║██╔════╝░
+ *   ██║░░██║██║█████╗░░██║░░██╗░██║░░██║  ██║░░░░░██║██╔██╗██║██║░░██╗░
+ *   ██║░░██║██║██╔══╝░░██║░░╚██╗██║░░██║  ██║░░░░░██║██║╚████║██║░░╚██╗
+ *   ██████╔╝██║███████╗╚██████╔╝╚█████╔╝  ███████╗██║██║░╚███║╚██████╔╝
+ *   ╚═════╝░╚═╝╚══════╝░╚═════╝░░╚════╝░  ╚══════╝╚═╝╚═╝░░╚══╝░╚═════╝░
+ *
+ *   Это программное обеспечение имеет лицензию, как это сказано в файле
+ *   COPYING, который Вы должны были получить в рамках распространения ПО.
+ *
+ *   Использование, изменение, копирование, распространение, обмен/продажа
+ *   могут выполняться исключительно в согласии с условиями файла COPYING.
+ *
+ *   Mail: diegoling33@gmail.com
+ *
+ */
+
 package me.ling.kipfin.core.managers;
 
 import org.apache.commons.net.ftp.FTPClient;
@@ -96,15 +115,15 @@ public class FTPManager {
      * @param connection    - соединение
      * @return  - элемент клиента
      */
-    public static me.ling.kipfin.core.FTPClient createClient(FTPClient connection){
-        return new me.ling.kipfin.core.FTPClient(connection);
+    public static me.ling.kipfin.core.ftp.FTPClient createClient(FTPClient connection){
+        return new me.ling.kipfin.core.ftp.FTPClient(connection);
     }
 
     /**
      * Создает новый Ling FTP клиент
      * @return  - элемент клиента
      */
-    public static me.ling.kipfin.core.FTPClient createClient() throws IOException {
-        return new me.ling.kipfin.core.FTPClient(FTPManager.getConnection());
+    public static me.ling.kipfin.core.ftp.FTPClient createClient() throws IOException {
+        return new me.ling.kipfin.core.ftp.FTPClient(FTPManager.getConnection());
     }
 }

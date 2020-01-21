@@ -1,3 +1,22 @@
+/*
+ *
+ *   ██████╗░██╗███████╗░██████╗░░█████╗░  ██╗░░░░░██╗███╗░░██╗░██████╗░
+ *   ██╔══██╗██║██╔════╝██╔════╝░██╔══██╗  ██║░░░░░██║████╗░██║██╔════╝░
+ *   ██║░░██║██║█████╗░░██║░░██╗░██║░░██║  ██║░░░░░██║██╔██╗██║██║░░██╗░
+ *   ██║░░██║██║██╔══╝░░██║░░╚██╗██║░░██║  ██║░░░░░██║██║╚████║██║░░╚██╗
+ *   ██████╔╝██║███████╗╚██████╔╝╚█████╔╝  ███████╗██║██║░╚███║╚██████╔╝
+ *   ╚═════╝░╚═╝╚══════╝░╚═════╝░░╚════╝░  ╚══════╝╚═╝╚═╝░░╚══╝░╚═════╝░
+ *
+ *   Это программное обеспечение имеет лицензию, как это сказано в файле
+ *   COPYING, который Вы должны были получить в рамках распространения ПО.
+ *
+ *   Использование, изменение, копирование, распространение, обмен/продажа
+ *   могут выполняться исключительно в согласии с условиями файла COPYING.
+ *
+ *   Mail: diegoling33@gmail.com
+ *
+ */
+
 package me.ling.kipfin.core;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -5,10 +24,8 @@ import me.ling.kipfin.core.log.Logger;
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.core.managers.FTPManager;
 import me.ling.kipfin.core.managers.SQLManager;
-import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.database.GroupsDB;
 import me.ling.kipfin.database.TeachersDB;
-import me.ling.kipfin.timetable.builders.MasterBuilder;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -36,7 +53,6 @@ public class Bootloader extends WithLogger {
         this.log("Установка настроек...");
         SQLManager.setUp(sqlUrl, sqlLogin, sqlPassword);
         FTPManager.setUp(ftpLogin, ftpPassword, ftpHost, ftpPort, ftpRootDir);
-        MasterBuilder.START_STUDY_DATE = DateUtils.fromLocalDateString(env.get("START_STUDY_DATE"));
     }
 
     /**
