@@ -17,22 +17,15 @@
  *
  */
 
-package utils;
+package me.ling.kipfin;
 
-import me.ling.kipfin.core.utils.StringUtils;
-import org.junit.jupiter.api.Test;
+import io.github.cdimascio.dotenv.Dotenv;
+import me.ling.kipfin.core.Bootloader;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class StringUtilsTest {
+public class Main {
 
-    @Test
-    void removeAllSpaces() {
-        assertEquals("Test me please", StringUtils.removeAllSpaces("    Test        me  please "));
-    }
-
-    @Test
-    void title() {
-        assertEquals("Test", StringUtils.title("test"));
+    public static void main(String[] args) throws Exception {
+        Bootloader bootloader = new Bootloader(Dotenv.load());
     }
 }

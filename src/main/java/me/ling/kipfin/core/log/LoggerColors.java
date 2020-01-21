@@ -17,22 +17,29 @@
  *
  */
 
-package utils;
+package me.ling.kipfin.core.log;
 
-import me.ling.kipfin.core.utils.StringUtils;
-import org.junit.jupiter.api.Test;
+/**
+ * Цвета логгера
+ */
+public class LoggerColors {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class StringUtilsTest {
-
-    @Test
-    void removeAllSpaces() {
-        assertEquals("Test me please", StringUtils.removeAllSpaces("    Test        me  please "));
-    }
-
-    @Test
-    void title() {
-        assertEquals("Test", StringUtils.title("test"));
+    /**
+     * Возвращает окрашенную строку и сборс после
+     * @param color - цвет
+     * @param text  - текст
+     * @return Текст с ASCII символами
+     */
+    public static String getColoredString(String color, String ...text){
+        return String.format("%s%s%s", color, String.join(" ", text), LoggerColors.ANSI_RESET);
     }
 }

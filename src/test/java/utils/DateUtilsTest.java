@@ -19,7 +19,7 @@
 
 package utils;
 
-import me.ling.core.utils.DateUtils;
+import me.ling.kipfin.core.utils.DateUtils;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

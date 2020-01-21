@@ -17,22 +17,28 @@
  *
  */
 
-package utils;
+package me.ling.kipfin.core.utils;
 
-import me.ling.kipfin.core.utils.StringUtils;
-import org.junit.jupiter.api.Test;
+/**
+ * Утилиты строк
+ */
+public class StringUtils {
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class StringUtilsTest {
-
-    @Test
-    void removeAllSpaces() {
-        assertEquals("Test me please", StringUtils.removeAllSpaces("    Test        me  please "));
+    /**
+     * Удаляет все лишиние пробелы
+     * @param s - входная строка
+     * @return  - выходная строка
+     */
+    public static String removeAllSpaces(String s){
+        return s.replaceAll("^\\s+|\\s+$", "").replaceAll("\\s+", " ");
     }
 
-    @Test
-    void title() {
-        assertEquals("Test", StringUtils.title("test"));
+    /**
+     * Возвращает строку с заглавной буквы
+     * @param s - исходная строка
+     * @return - строка с заглавной буквы
+     */
+    public static String title(String s){
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 }

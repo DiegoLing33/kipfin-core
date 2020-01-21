@@ -17,22 +17,53 @@
  *
  */
 
-package utils;
+package me.ling.kipfin.timetable.entities;
 
-import me.ling.kipfin.core.utils.StringUtils;
-import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
 
-class StringUtilsTest {
+/**
+ * Элемент расписания
+ */
+public class TimetableItem {
 
-    @Test
-    void removeAllSpaces() {
-        assertEquals("Test me please", StringUtils.removeAllSpaces("    Test        me  please "));
+    @JsonProperty
+    private final String group;
+
+    @JsonProperty
+    private final List<String> subjects;
+
+    @JsonProperty
+    private final Integer dayOfWeekIndex;
+
+    public TimetableItem(String group, List<String> subjects, Integer dayOfWeekIndex) {
+        this.group = group;
+        this.subjects = subjects;
+        this.dayOfWeekIndex = dayOfWeekIndex;
     }
 
-    @Test
-    void title() {
-        assertEquals("Test", StringUtils.title("test"));
+    /**
+     * Возвращает группу
+     * @return группа
+     */
+    public String getGroup() {
+        return group;
+    }
+
+    /**
+     * Возвращает массив предметов
+     * @return массив предметов
+     */
+    public List<String> getSubjects() {
+        return subjects;
+    }
+
+    /**
+     * Возвращает день недели
+     * @return день недели (0...6)
+     */
+    public Integer getDayOfWeekIndex() {
+        return dayOfWeekIndex;
     }
 }

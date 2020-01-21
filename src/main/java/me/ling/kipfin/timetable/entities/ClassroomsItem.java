@@ -17,22 +17,68 @@
  *
  */
 
-package utils;
+package me.ling.kipfin.timetable.entities;
 
-import me.ling.kipfin.core.utils.StringUtils;
-import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+/**
+ * Элемент аудиторий
+ */
+public class ClassroomsItem {
 
-class StringUtilsTest {
+    @JsonProperty
+    private String where;
 
-    @Test
-    void removeAllSpaces() {
-        assertEquals("Test me please", StringUtils.removeAllSpaces("    Test        me  please "));
+    @JsonProperty
+    private String who;
+
+    @JsonProperty
+    private Integer index;
+
+    @JsonProperty
+    private String group;
+
+    public ClassroomsItem(){}
+    public ClassroomsItem(String where, String who, String group, Integer index) {
+        this.where = where;
+        this.who = who;
+        this.group = group;
+        this.index = index;
     }
 
-    @Test
-    void title() {
-        assertEquals("Test", StringUtils.title("test"));
+    /**
+     * Возвращает аудиторию
+     *
+     * @return аудитория
+     */
+    public String getWhere() {
+        return where;
+    }
+
+    /**
+     * Возвращает преподавателя
+     *
+     * @return имя преподавателя
+     */
+    public String getWho() {
+        return who;
+    }
+
+    /**
+     * Возвращает индекс
+     *
+     * @return индекс
+     */
+    public Integer getIndex() {
+        return index;
+    }
+
+    /**
+     * Возвращает группу
+     *
+     * @return группа
+     */
+    public String getGroup() {
+        return group;
     }
 }

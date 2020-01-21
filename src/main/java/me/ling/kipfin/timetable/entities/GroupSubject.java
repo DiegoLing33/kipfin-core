@@ -17,22 +17,57 @@
  *
  */
 
-package utils;
+package me.ling.kipfin.timetable.entities;
 
-import me.ling.kipfin.core.utils.StringUtils;
-import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Map;
 
-class StringUtilsTest {
+/**
+ * Элемент расписания с аудиториями и преподавателями
+ */
+public class GroupSubject {
 
-    @Test
-    void removeAllSpaces() {
-        assertEquals("Test me please", StringUtils.removeAllSpaces("    Test        me  please "));
+    @JsonProperty
+    private String title;
+
+    @JsonProperty
+    private Map<String, String> who;
+
+    @JsonProperty
+    private Integer index;
+
+    public GroupSubject(){}
+    public GroupSubject(String title, Map<String, String> who, Integer index) {
+        this.title = title;
+        this.who = who;
+        this.index = index;
     }
 
-    @Test
-    void title() {
-        assertEquals("Test", StringUtils.title("test"));
+    /**
+     * Возвращает информацию о преподавателе и аудитории
+     *
+     * @return связка Преподаваетль->Аудитория
+     */
+    public Map<String, String> getWho() {
+        return who;
+    }
+
+    /**
+     * Возвращает индекс пары
+     *
+     * @return индекс пары
+     */
+    public Integer getIndex() {
+        return index;
+    }
+
+    /**
+     * Возвращает название пары
+     *
+     * @return - название пары
+     */
+    public String getTitle() {
+        return title;
     }
 }
