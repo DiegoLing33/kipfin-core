@@ -2,7 +2,6 @@ package me.ling.kipfin.core.parsers;
 
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.core.utils.StringUtils;
-import me.ling.kipfin.timetable.exceptions.TimetableParserException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -49,7 +48,7 @@ public abstract class ExcelParser<T> extends WithLogger {
      *
      * @return - результат
      */
-    public abstract T start() throws TimetableParserException;
+    public abstract T start();
 
     /**
      * Возвращает строку

@@ -32,6 +32,7 @@ public class GroupsDB extends EntityDB<String> {
      * @param g - часть группы
      * @return  - полное название группы
      */
+
     @Nullable
     public String easy(String g) {
         for (String group : this.getCache().values())
