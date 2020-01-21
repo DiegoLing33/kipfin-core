@@ -1,8 +1,10 @@
 package me.ling.kipfin.database;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -16,15 +18,15 @@ public abstract class EntityDB<TSource> {
     /**
      * Кэшированные данные
      */
-    @Nullable
-    private Map<Integer, TSource> cache = null;
+    @NotNull
+    private Map<Integer, TSource> cache = new HashMap<>();
 
     /**
      * Возвращает кэшированные данные запроса
      *
      * @return - кэшированные данные
      */
-    @Nullable
+    @NotNull
     public Map<Integer, TSource> getCache() {
         return cache;
     }
@@ -56,7 +58,7 @@ public abstract class EntityDB<TSource> {
      */
     @Nullable
     public TSource getById(Integer id) {
-        return this.cache == null ? null : this.cache.getOrDefault(id, null);
+        return this.cache.getOrDefault(id, null);
     }
 
     /**
@@ -66,7 +68,7 @@ public abstract class EntityDB<TSource> {
      * @return - результат проверки
      */
     public boolean contains(TSource item) {
-        return this.cache != null && this.cache.containsValue(item);
+        return this.cache.containsValue(item);
     }
 
     /**
@@ -76,7 +78,7 @@ public abstract class EntityDB<TSource> {
      * @return - результат проверки
      */
     public boolean contains(Function<TSource, Boolean> filter) {
-        return this.cache != null && this.cache.values().stream().anyMatch(filter::apply);
+        return this.cache.values().stream().anyMatch(filter::apply);
     }
 
 }
