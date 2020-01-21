@@ -34,7 +34,6 @@ public class GroupsDB extends EntityDB<String> {
      */
     @Nullable
     public String easy(String g) {
-        assert this.getCache() != null;
         for (String group : this.getCache().values())
             if (group.toLowerCase().contains(g.toLowerCase())) return group;
         return null;

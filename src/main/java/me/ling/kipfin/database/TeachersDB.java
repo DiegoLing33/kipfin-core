@@ -15,8 +15,6 @@ public class TeachersDB extends EntityDB<Teacher> {
 
     public final static TeachersDB shared = new TeachersDB();
 
-
-
     /**
      * Возвращает всех преподавателей
      *
@@ -42,7 +40,6 @@ public class TeachersDB extends EntityDB<Teacher> {
      */
     @Nullable
     public Teacher easy(String t) {
-        assert this.getCache() != null;
         for (Teacher teacher : this.getCache().values())
             if (teacher.getName().toLowerCase().contains(t.toLowerCase())) return teacher;
         return null;
