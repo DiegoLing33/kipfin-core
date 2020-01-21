@@ -80,11 +80,18 @@ public final class DateUtils {
         return date.getDayOfWeek().getValue() - 1;
     }
 
-    public static Integer getWeeksCount(LocalDate startDate, LocalDate currentDate){
-        Long ms1 = startDate.toEpochDay();
-        Long ms2 = currentDate.toEpochDay();
-        Long dif = Math.abs(ms2 - ms1);
+    /**
+     * Возвращает разницу между датами в кол-ве недель
+     *
+     * @param startDate   - первая дата
+     * @param currentDate - вторая дата
+     * @return - количество недель между датами
+     */
+    public static Integer getWeeksCount(LocalDate startDate, LocalDate currentDate) {
+        long ms1 = startDate.toEpochDay();
+        long ms2 = currentDate.toEpochDay();
+        long dif = Math.abs(ms2 - ms1);
 
-        return ((int)Math.floor(dif / 7.0));
+        return ((int) Math.floor(dif / 7.0));
     }
 }

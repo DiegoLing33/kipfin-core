@@ -10,10 +10,12 @@ import java.util.List;
 public class GroupWithSubjects {
 
     @JsonProperty
-    private final String group;
+    private String group;
 
     @JsonProperty
-    private final List<GroupSubject> subjects;
+    private List<GroupSubject> subjects;
+
+    public GroupWithSubjects(){}
 
     public GroupWithSubjects(String group, List<GroupSubject> subjects) {
         this.group = group;

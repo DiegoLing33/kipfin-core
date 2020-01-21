@@ -27,17 +27,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ClassroomsItem {
 
     @JsonProperty
-    private final String where;
+    private String where;
 
     @JsonProperty
-    private final String who;
+    private String who;
 
     @JsonProperty
-    private final Integer index;
+    private Integer index;
 
     @JsonProperty
-    private final String group;
+    private String group;
 
+    public ClassroomsItem(){}
     public ClassroomsItem(String where, String who, String group, Integer index) {
         this.where = where;
         this.who = who;

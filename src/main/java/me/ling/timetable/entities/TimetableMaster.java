@@ -20,8 +20,10 @@
 package me.ling.timetable.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Мастер-расписание
@@ -29,15 +31,18 @@ import java.util.List;
 public class TimetableMaster {
 
     @JsonProperty
-    private final Integer weekIndex;
+    private Integer weekIndex;
     @JsonProperty
-    private final Integer dayOfWeekIndex;
+    private Integer dayOfWeekIndex;
     @JsonProperty
-    private final String date;
+    private String date;
     @JsonProperty
-    private final List<GroupWithSubjects> timetable;
+    private List<GroupWithSubjects> timetable;
     @JsonProperty
-    private final List<TeacherWithSubjects> teachers;
+    private List<TeacherWithSubjects> teachers;
+
+    public TimetableMaster() {
+    }
 
     public TimetableMaster(Integer weekIndex, Integer dayOfWeekIndex, String date, List<GroupWithSubjects> timetable,
                            List<TeacherWithSubjects> teachers) {
@@ -91,5 +96,31 @@ public class TimetableMaster {
      */
     public List<TeacherWithSubjects> getTeachers() {
         return teachers;
+    }
+
+    /**
+     * Возвращает расписание для группы
+     *
+     * @param groupName - группа
+     * @return - расписание
+     */
+    @Nullable
+    public GroupWithSubjects getSubjects(String groupName) {
+        List<GroupWithSubjects> group = this.getTimetable().stream().filter(g -> g.getGroup().equals(groupName))
+                .collect(Collectors.toList());
+        return group.size() > 0 ? group.get(0) : null;
+    }
+
+    /**
+     * Возвращает расписание для преподавателя
+     *
+     * @param teacherName - имя преподавателя
+     * @return - расписание для преподавателя
+     */
+    @Nullable
+    public TeacherWithSubjects getTeacher(String teacherName) {
+        List<TeacherWithSubjects> teacher = this.getTeachers().stream().filter(g -> g.getTeacher().equals(teacherName))
+                .collect(Collectors.toList());
+        return teacher.size() > 0 ? teacher.get(0) : null;
     }
 }

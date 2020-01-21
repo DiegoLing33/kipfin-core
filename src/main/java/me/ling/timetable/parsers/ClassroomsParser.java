@@ -1,6 +1,6 @@
 package me.ling.timetable.parsers;
 
-import me.ling.core.app.ExcelParser;
+import me.ling.core.parsers.ExcelParser;
 import me.ling.timetable.entities.ClassroomsItem;
 import me.ling.core.log.Logger;
 import me.ling.core.log.LoggerColors;
@@ -77,16 +77,17 @@ public class ClassroomsParser extends ExcelParser<List<ClassroomsItem>> {
 
     /**
      * Возвращает аудиторию
+     *
      * @param rowIndex - индекс строки
      * @param colIndex - индекс колонки
      * @return - строка или null
      */
-    public String getClassroom(int rowIndex, int colIndex){
+    public String getClassroom(int rowIndex, int colIndex) {
         Cell cell = this.getCell(rowIndex, colIndex);
-        if(cell.getCellTypeEnum() == CellType.STRING)
+        if (cell.getCellType() == CellType.STRING)
             return cell.getStringCellValue();
-        else if(cell.getCellTypeEnum() == CellType.NUMERIC)
-            return String.valueOf((int)cell.getNumericCellValue());
+        else if (cell.getCellType() == CellType.NUMERIC)
+            return String.valueOf((int) cell.getNumericCellValue());
         return "UNDEFINED";
     }
 
@@ -132,8 +133,8 @@ public class ClassroomsParser extends ExcelParser<List<ClassroomsItem>> {
             } else {
                 if (!GroupsDB.shared.contains(fixed)) // Testing group DB
                     throw new TimetableParserException("Группа " + fixed + " не найдена в базе данных!");
-                return fixed;
             }
+            return fixed;
         }
         return null;
     }

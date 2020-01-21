@@ -78,4 +78,5 @@ public abstract class EntityDB<TSource> {
     public boolean contains(Function<TSource, Boolean> filter) {
         return this.cache != null && this.cache.values().stream().anyMatch(filter::apply);
     }
+
 }

@@ -1,6 +1,6 @@
 package me.ling.timetable.parsers;
 
-import me.ling.core.app.ExcelParser;
+import me.ling.core.parsers.ExcelParser;
 import me.ling.timetable.entities.TimetableItem;
 import me.ling.core.log.Logger;
 import me.ling.core.log.LoggerColors;
@@ -82,9 +82,10 @@ public class TimetableParser extends ExcelParser<List<TimetableItem>> {
                 String[] groups = fixed.split(" ");
                 if (!Arrays.stream(groups).allMatch(GroupsDB.shared::contains))
                     throw new TimetableParserException("Здесь что-то не так: " + fixed);
+            } else {
+                if (!GroupsDB.shared.contains(fixed)) // Testing group DB
+                    throw new TimetableParserException("Группа " + fixed + " не найдена в базе данных!");
             }
-            if (!GroupsDB.shared.contains(fixed)) // Testing group DB
-                throw new TimetableParserException("Группа " + fixed + " не найдена в базе данных!");
             return fixed;
         }
         return null;

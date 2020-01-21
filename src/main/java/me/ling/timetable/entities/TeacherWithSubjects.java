@@ -8,11 +8,12 @@ public class TeacherWithSubjects {
 
 
     @JsonProperty
-    private final String teacher;
+    private String teacher;
 
     @JsonProperty
-    private final List<ClassroomsItem> items;
+    private List<ClassroomsItem> items;
 
+    public TeacherWithSubjects(){}
     public TeacherWithSubjects(String teacher, List<ClassroomsItem> items) {
         this.teacher = teacher;
         this.items = items;

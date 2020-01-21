@@ -29,14 +29,15 @@ import java.util.Map;
 public class GroupSubject {
 
     @JsonProperty
-    private final String title;
+    private String title;
 
     @JsonProperty
-    private final Map<String, String> who;
+    private Map<String, String> who;
 
     @JsonProperty
-    private final Integer index;
+    private Integer index;
 
+    public GroupSubject(){}
     public GroupSubject(String title, Map<String, String> who, Integer index) {
         this.title = title;
         this.who = who;

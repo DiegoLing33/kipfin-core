@@ -1,4 +1,4 @@
-package me.ling.core.app;
+package me.ling.core.parsers;
 
 import me.ling.core.log.Logger;
 import me.ling.core.log.WithLogger;
@@ -91,7 +91,7 @@ public abstract class ExcelParser<T> extends WithLogger {
      */
     public String getStringValue(int rowIndex, int colIndex, String def) {
         Cell cell = this.getCell(rowIndex, colIndex);
-        if (cell != null && cell.getCellTypeEnum() == CellType.STRING)
+        if (cell != null && cell.getCellType() == CellType.STRING)
             return StringUtils.removeAllSpaces(cell.getStringCellValue());
         return def;
     }

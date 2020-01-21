@@ -5,7 +5,7 @@ import me.ling.timetable.entities.TimetableItem;
 import me.ling.timetable.entities.TimetableMaster;
 import me.ling.timetable.parsers.ClassroomsParser;
 import me.ling.timetable.builders.MasterBuilder;
-import me.ling.timetable.app.MasterTimetablePackager;
+import me.ling.timetable.app.TimetablePackager;
 import me.ling.timetable.parsers.TimetableParser;
 import me.ling.timetable.exceptions.TimetableParserException;
 
@@ -87,14 +87,14 @@ public class TimetableWorkerApplication {
      * @throws IOException              - исключение файлов
      * @throws TimetableParserException - исключение расписания
      */
-    public static TimetableMaster createPackage(String classroomsPath, String weekPath, String outputPath) throws IOException, TimetableParserException {
+    public static TimetablePackager createPackage(String classroomsPath, String weekPath, String outputPath) throws IOException, TimetableParserException {
         var classroomsParser = TimetableWorkerApplication.createClassroomsParser(classroomsPath);
         var timetableParser = TimetableWorkerApplication.createTimetableParser(weekPath);
         var classrooms = classroomsParser.start();
         var timetable = timetableParser.start();
         var master = TimetableWorkerApplication.createMasterObject(classroomsParser.getDate(), timetable, classrooms);
-        var packager = new MasterTimetablePackager(timetable, classrooms, master);
-        packager.createPackage(outputPath);
-        return master;
+        var packager = new TimetablePackager(timetable, classrooms, master, outputPath);
+        packager.createPackage();
+        return packager;
     }
 }
