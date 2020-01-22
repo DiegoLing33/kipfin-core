@@ -8,7 +8,7 @@ import me.ling.kipfin.core.sql.Column;
  */
 public class UserGroup {
 
-    @Column(name = "group_id")
+    @Column(name = "group_id", type = Integer.class)
     @JsonProperty("group_id")
     protected Integer groupId;
 
