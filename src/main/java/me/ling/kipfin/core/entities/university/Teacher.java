@@ -17,9 +17,10 @@
  *
  */
 
-package me.ling.kipfin.core.entities;
+package me.ling.kipfin.core.entities.university;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import me.ling.kipfin.core.sql.Column;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -27,15 +28,19 @@ import org.jetbrains.annotations.Nullable;
  */
 public class Teacher {
 
+    @Column(name="teacher_id", type=Integer.class)
     @JsonProperty("teacher_id")
-    private final Integer teacherId;
+    private Integer teacherId;
 
+    @Column(name="teacher_group_id", type=Integer.class)
     @JsonProperty("teacher_group_id")
-    private final Integer groupId;
+    private Integer groupId;
 
+    @Column(name="teacher_name")
     @JsonProperty("teacher_name")
-    private final String name;
+    private String name;
 
+    public Teacher(){}
     public Teacher(Integer teacherId, Integer groupId, String name) {
         this.teacherId = teacherId;
         this.groupId = groupId;
