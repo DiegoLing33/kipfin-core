@@ -19,6 +19,8 @@
 
 package me.ling.kipfin.core.utils;
 
+import me.ling.kipfin.exceptions.WrongDateException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -68,6 +70,18 @@ public final class DateUtils {
      */
     public static Boolean isStringDateInLocalFormat(String localDateString) {
         return localDateString.matches(DateUtils.localDatePattern);
+    }
+
+    /**
+     * Проверяет строку даты на формат и выбрасывает исключение, в случае ошибки
+     *
+     * @param localDateString - строка даты
+     * @return - проверяемая стркоа даты
+     * @throws WrongDateException - ошибка проверки даты
+     */
+    public static String testDateFormat(String localDateString) throws WrongDateException {
+        if (DateUtils.isStringDateInLocalFormat(localDateString)) return localDateString;
+        throw new WrongDateException(localDateString);
     }
 
     /**
