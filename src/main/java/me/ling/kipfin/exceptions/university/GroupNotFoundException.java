@@ -21,11 +21,11 @@ package me.ling.kipfin.exceptions.university;
 
 import me.ling.kipfin.exceptions.DatabaseEntityNotFoundException;
 
-public class GroupNotFoundExceptionDatabase extends DatabaseEntityNotFoundException {
-    public GroupNotFoundExceptionDatabase(String g){
+public class GroupNotFoundException extends DatabaseEntityNotFoundException {
+    public GroupNotFoundException(String g){
         super("University group [ " + g + " ] is undefined!");
     }
-    private GroupNotFoundExceptionDatabase(Integer g){
+    private GroupNotFoundException(Integer g){
         super("University group with identifier [ " + g + " ] is undefined!");
     }
 }

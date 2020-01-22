@@ -22,7 +22,7 @@ package me.ling.kipfin.database.university;
 import me.ling.kipfin.core.EntityDB;
 import me.ling.kipfin.core.entities.university.UniversityGroup;
 import me.ling.kipfin.core.sql.SQLObjectMapper;
-import me.ling.kipfin.exceptions.university.GroupNotFoundExceptionDatabase;
+import me.ling.kipfin.exceptions.university.GroupNotFoundException;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * База данных - таблица группы
  */
-public class GroupsDB extends EntityDB<UniversityGroup, GroupNotFoundExceptionDatabase> {
+public class GroupsDB extends EntityDB<UniversityGroup, GroupNotFoundException> {
 
     /**
      * Элемент базы данных - синглтон
@@ -65,6 +65,6 @@ public class GroupsDB extends EntityDB<UniversityGroup, GroupNotFoundExceptionDa
     public UniversityGroup easy(String g) {
         for (UniversityGroup group : this.getCache().values())
             if (group.getTitle().toLowerCase().contains(g.toLowerCase())) return group;
-        throw new GroupNotFoundExceptionDatabase(g);
+        throw new GroupNotFoundException(g);
     }
 }
