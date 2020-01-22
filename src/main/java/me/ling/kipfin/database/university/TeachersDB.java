@@ -24,6 +24,7 @@ import me.ling.kipfin.core.entities.university.Teacher;
 import me.ling.kipfin.core.managers.SQLManager;
 import me.ling.kipfin.core.sql.SQLObjectMapper;
 import me.ling.kipfin.exceptions.university.TeacherNotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
@@ -62,7 +63,7 @@ public class TeachersDB extends EntityDB<Teacher, TeacherNotFoundException> {
      * @param t- часть имени преподавателя
      * @return - полное имя преподавателя
      */
-    @Nullable
+    @NotNull
     public Teacher easy(String t) {
         for (Teacher teacher : this.getCache().values())
             if (teacher.getName().toLowerCase().contains(t.toLowerCase())) return teacher;

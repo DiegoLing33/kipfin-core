@@ -23,6 +23,7 @@ import me.ling.kipfin.core.EntityDB;
 import me.ling.kipfin.core.entities.university.UniversityGroup;
 import me.ling.kipfin.core.sql.SQLObjectMapper;
 import me.ling.kipfin.exceptions.university.GroupNotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
@@ -61,7 +62,7 @@ public class GroupsDB extends EntityDB<UniversityGroup, GroupNotFoundException> 
      * @return  - полное название группы
      */
 
-    @Nullable
+    @NotNull
     public UniversityGroup easy(String g) {
         for (UniversityGroup group : this.getCache().values())
             if (group.getTitle().toLowerCase().contains(g.toLowerCase())) return group;
