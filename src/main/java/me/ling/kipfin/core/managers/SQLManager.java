@@ -20,8 +20,14 @@
 package me.ling.kipfin.core.managers;
 
 import me.ling.kipfin.core.callbacks.CallbackWithException;
+import me.ling.kipfin.core.callbacks.RCallbackWithException;
+import me.ling.kipfin.core.log.Logger;
+import me.ling.kipfin.core.log.LoggerColors;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * Менеджер SQL
@@ -70,17 +76,35 @@ public class SQLManager {
 
     /**
      * Выполняет запрос SELECT * в указанную таблицу
-     * @param tableName     - имя табилцы
-     * @param closure       - обработчик
+     *
+     * @param tableName - имя табилцы
+     * @param closure   - обработчик
      * @throws SQLException - исключение запроса
      */
     public static void selectAll(String tableName, CallbackWithException<ResultSet, SQLException> closure) throws SQLException {
         try (Connection connection = SQLManager.getConnection()) {
+            Logger.logAs("SQL", "Загрузка данных из таблицы", LoggerColors.getColoredString(LoggerColors.ANSI_CYAN, tableName));
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * from " + tableName);
             while (resultSet.next()) {
                 closure.apply(resultSet);
             }
         }
+    }
+
+    /**
+     * Выполняет запрос SELECT * в указанную таблицу и создает карту
+     *
+     * @param tableName - имя табилцы
+     * @param colWithId - имя столбца с идентификатором
+     * @param callback  - обработчик
+     * @throws SQLException - исключение запроса
+     */
+    public static <T> HashMap<Integer, T>
+    selectAllAndMap(String tableName, String colWithId, RCallbackWithException<ResultSet, T,
+            SQLException> callback) throws SQLException {
+        HashMap<Integer, T> hashMap = new HashMap<>();
+        SQLManager.selectAll(tableName, resultSet -> hashMap.put(resultSet.getInt(colWithId), callback.apply(resultSet)));
+        return hashMap;
     }
 }
