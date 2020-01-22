@@ -24,8 +24,12 @@ import me.ling.kipfin.core.log.Logger;
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.core.managers.FTPManager;
 import me.ling.kipfin.core.managers.SQLManager;
-import me.ling.kipfin.database.GroupsDB;
-import me.ling.kipfin.database.TeachersDB;
+import me.ling.kipfin.database.university.GroupsDB;
+import me.ling.kipfin.database.university.TeachersDB;
+import me.ling.kipfin.database.users.UserAuthTokensDB;
+import me.ling.kipfin.database.users.UserDevTokensDB;
+import me.ling.kipfin.database.users.UserGroupsDB;
+import me.ling.kipfin.database.users.UsersDB;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -53,6 +57,33 @@ public class Bootloader extends WithLogger {
         this.log("Установка настроек...");
         SQLManager.setUp(sqlUrl, sqlLogin, sqlPassword);
         FTPManager.setUp(ftpLogin, ftpPassword, ftpHost, ftpPort, ftpRootDir);
+
+        GroupsDB.TABLE_NAME = env.get("sql.tables.groups");
+        TeachersDB.TABLE_NAME = env.get("sql.tables.teachers");
+
+        UsersDB.TABLE_NAME = env.get("sql.tables.users");
+        UserGroupsDB.TABLE_NAME = env.get("sql.tables.user_groups");
+        UserAuthTokensDB.TABLE_NAME = env.get("sql.tables.user_auth_tokens");
+        UserDevTokensDB.TABLE_NAME = env.get("sql.tables.user_dev_tokens");
+    }
+
+    /**
+     * Обновление баз данных
+     *
+     * @param extended - полная загрузка данных
+     * @throws SQLException - исключения обновления данных
+     */
+    public void updateDatabase(Boolean extended) throws SQLException {
+        this.log(Logger.WAIT, "Подключение к MySQL...");
+        TeachersDB.shared.update();
+        GroupsDB.shared.update();
+        if(extended){
+            UsersDB.shared.update();
+            UserGroupsDB.shared.update();
+            UserAuthTokensDB.shared.update();
+            UserDevTokensDB.shared.update();
+        }
+        this.log(true, "Подключение к MySQL...");
     }
 
     /**
@@ -61,10 +92,7 @@ public class Bootloader extends WithLogger {
      * @throws SQLException - исключения обновления данных
      */
     public void updateDatabase() throws SQLException {
-        this.log(Logger.WAIT, "Подключение к MySQL...");
-        TeachersDB.shared.update();
-        GroupsDB.shared.update();
-        this.log(true, "Подключение к MySQL...");
+        this.updateDatabase(false);
     }
 
 }
