@@ -17,33 +17,42 @@
  *
  */
 
-package me.ling.kipfin.database;
+package me.ling.kipfin.database.university;
 
-import me.ling.kipfin.core.managers.SQLManager;
+import me.ling.kipfin.core.EntityDB;
+import me.ling.kipfin.core.entities.university.UniversityGroup;
+import me.ling.kipfin.core.sql.SQLObjectMapper;
+import me.ling.kipfin.exceptions.university.GroupNotFoundExceptionDatabase;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * База данных - таблица группы
  */
-public class GroupsDB extends EntityDB<String> {
+public class GroupsDB extends EntityDB<UniversityGroup, GroupNotFoundExceptionDatabase> {
 
+    /**
+     * Элемент базы данных - синглтон
+     */
     public final static GroupsDB shared = new GroupsDB();
 
     /**
-     * Возвращает все группы из базы данных
-     *
-     * @return - карта групп
-     * @throws SQLException - исключение
+     * Имя таблицы данных
      */
-    public Map<Integer, String> getAll() throws SQLException {
-        HashMap<Integer, String> groups = new HashMap<>();
-        SQLManager.selectAll("unv_groups", result ->
-                groups.put(result.getInt("group_id"), result.getString("group_title")));
-        return groups;
+    public static String TABLE_NAME = "";
+
+    /**
+     * Загружает и возвращает все записи из таблицы. Используйте этот метод с осторжностью.
+     * Для получения данных стоит при запуске приложения выполнить метод `EntityDB::update`,
+     * и далее использовать метод `EntityDB::getCache`.
+     *
+     * @return - карта записей Identifier->Entity
+     * @throws SQLException - исключения, которые могут возникнуть при работе с базой данных
+     */
+    public Map<Integer, UniversityGroup> getAll() throws SQLException {
+        return SQLObjectMapper.selectAllAndMap(UniversityGroup.class, GroupsDB.TABLE_NAME, "group_id");
     }
 
     /**
@@ -53,9 +62,9 @@ public class GroupsDB extends EntityDB<String> {
      */
 
     @Nullable
-    public String easy(String g) {
-        for (String group : this.getCache().values())
-            if (group.toLowerCase().contains(g.toLowerCase())) return group;
-        return null;
+    public UniversityGroup easy(String g) {
+        for (UniversityGroup group : this.getCache().values())
+            if (group.getTitle().toLowerCase().contains(g.toLowerCase())) return group;
+        throw new GroupNotFoundExceptionDatabase(g);
     }
 }

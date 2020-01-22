@@ -17,38 +17,43 @@
  *
  */
 
-package me.ling.kipfin.database;
+package me.ling.kipfin.database.university;
 
-import me.ling.kipfin.core.entities.Teacher;
+import me.ling.kipfin.core.EntityDB;
+import me.ling.kipfin.core.entities.university.Teacher;
 import me.ling.kipfin.core.managers.SQLManager;
+import me.ling.kipfin.core.sql.SQLObjectMapper;
+import me.ling.kipfin.exceptions.university.TeacherNotFoundException;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * База данных преподавателей
  */
-public class TeachersDB extends EntityDB<Teacher> {
+public class TeachersDB extends EntityDB<Teacher, TeacherNotFoundException> {
 
+    /**
+     * Элемент базы данных - синглтон
+     */
     public final static TeachersDB shared = new TeachersDB();
 
     /**
-     * Возвращает всех преподавателей
+     * Имя таблицы данных
+     */
+    public static String TABLE_NAME = "";
+
+    /**
+     * Загружает и возвращает все записи из таблицы. Используйте этот метод с осторжностью.
+     * Для получения данных стоит при запуске приложения выполнить метод `EntityDB::update`,
+     * и далее использовать метод `EntityDB::getCache`.
      *
-     * @return - карта преподавателей
-     * @throws SQLException - исключение
+     * @return - карта записей Identifier->Entity
+     * @throws SQLException - исключения, которые могут возникнуть при работе с базой данных
      */
     public Map<Integer, Teacher> getAll() throws SQLException {
-        HashMap<Integer, Teacher> teacherHashMap = new HashMap<>();
-        SQLManager.selectAll("teachers", resultSet ->
-                teacherHashMap.put(resultSet.getInt("teacher_id"), new Teacher(
-                resultSet.getInt("teacher_id"),
-                resultSet.getInt("teacher_group_id"),
-                resultSet.getString("teacher_name")
-        )));
-        return teacherHashMap;
+        return SQLObjectMapper.selectAllAndMap(Teacher.class, TeachersDB.TABLE_NAME, "teacher_id");
     }
 
     /**
@@ -61,6 +66,6 @@ public class TeachersDB extends EntityDB<Teacher> {
     public Teacher easy(String t) {
         for (Teacher teacher : this.getCache().values())
             if (teacher.getName().toLowerCase().contains(t.toLowerCase())) return teacher;
-        return null;
+        throw new TeacherNotFoundException(t);
     }
 }

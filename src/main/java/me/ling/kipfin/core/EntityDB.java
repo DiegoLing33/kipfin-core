@@ -17,10 +17,10 @@
  *
  */
 
-package me.ling.kipfin.database;
+package me.ling.kipfin.core;
 
+import me.ling.kipfin.exceptions.DatabaseEntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -32,7 +32,12 @@ import java.util.function.Function;
  *
  * @param <TSource>
  */
-public abstract class EntityDB<TSource> {
+public abstract class EntityDB<TSource, TNotFoundExceptionsType extends DatabaseEntityNotFoundException> {
+
+    /**
+     * Имя таблицы данных
+     */
+    public static String TABLE_NAME = "";
 
     /**
      * Кэшированные данные
@@ -51,10 +56,12 @@ public abstract class EntityDB<TSource> {
     }
 
     /**
-     * Выполняет запрос на получение всех данных из БД
+     * Загружает и возвращает все записи из таблицы. Используйте этот метод с осторжностью.
+     * Для получения данных стоит при запуске приложения выполнить метод `EntityDB::update`,
+     * и далее использовать метод `EntityDB::getCache`.
      *
-     * @return - данные из БД в TSource
-     * @throws SQLException - исключение при запросе
+     * @return - карта записей Identifier->TSource
+     * @throws SQLException - исключения, которые могут возникнуть при работе с базой данных
      */
     public abstract Map<Integer, TSource> getAll() throws SQLException;
 
@@ -70,14 +77,25 @@ public abstract class EntityDB<TSource> {
     }
 
     /**
+     * Возвращает true, если id существует
+     *
+     * @param id - идентификатор
+     * @return - результат проверки
+     */
+    public boolean hasId(Integer id) {
+        return this.getCache().containsKey(id);
+    }
+
+    /**
      * Возвращает элемент по ID
      *
      * @param id - идентификатор
      * @return - возвращает элемент
+     * @throws TNotFoundExceptionsType - исключение, оповещающее что элемент не найден
      */
-    @Nullable
-    public TSource getById(Integer id) {
-        return this.cache.getOrDefault(id, null);
+    @NotNull
+    public TSource getById(Integer id) throws TNotFoundExceptionsType {
+        return this.getCache().get(id);
     }
 
     /**
