@@ -23,9 +23,9 @@ import me.ling.kipfin.exceptions.DatabaseEntityNotFoundException;
 
 public class GroupNotFoundException extends DatabaseEntityNotFoundException {
     public GroupNotFoundException(String g){
-        super("University group [ " + g + " ] is undefined!");
+        super("Учебная группа [ " + g + " ] не найдена!");
     }
     private GroupNotFoundException(Integer g){
-        super("University group with identifier [ " + g + " ] is undefined!");
+        super("Учебная группа с идентификатором [ " + g + " ] не найдена!");
     }
 }

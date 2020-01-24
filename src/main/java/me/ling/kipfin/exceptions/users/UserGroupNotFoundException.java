@@ -4,9 +4,9 @@ import me.ling.kipfin.exceptions.DatabaseEntityNotFoundException;
 
 public class UserGroupNotFoundException extends DatabaseEntityNotFoundException {
     public UserGroupNotFoundException(String q){
-        super("User group [ " + q + " ] not found!");
+        super("Группа пользователей[ " + q + " ] не найдена!");
     }
     public UserGroupNotFoundException(Integer q){
-        super("User group with identifier [ " + q + " ] not found!");
+        super("Группа пользователей с идентификатором [ " + q + " ] не найдена!");
     }
 }

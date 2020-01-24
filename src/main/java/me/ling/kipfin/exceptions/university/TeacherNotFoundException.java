@@ -23,9 +23,9 @@ import me.ling.kipfin.exceptions.DatabaseEntityNotFoundException;
 
 public class TeacherNotFoundException extends DatabaseEntityNotFoundException {
     public TeacherNotFoundException(String teacherName) {
-        super("Teacher [ " + teacherName + " ] is undefined!");
+        super("Преподаватель [ " + teacherName + " ] не найден!");
     }
     public TeacherNotFoundException(Integer teacherInteger) {
-        super("Teacher with identifier [ " + teacherInteger + " ] is undefined!");
+        super("Преподаватель с идентификатором [ " + teacherInteger + " ] не найден!");
     }
 }

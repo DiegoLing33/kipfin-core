@@ -21,6 +21,6 @@ package me.ling.kipfin.exceptions;
 
 public class WrongDateException extends RuntimeException {
     public WrongDateException(String q){
-        super("Object [ " + q + " ] is not in valid date format (dd.mm.YYYY)!");
+        super("Объект [ " + q + " ] не подходит по формату даты (dd.mm.YYYY)!");
     }
 }
