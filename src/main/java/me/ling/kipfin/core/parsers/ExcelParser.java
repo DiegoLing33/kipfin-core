@@ -23,9 +23,11 @@ import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.core.utils.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -39,14 +41,24 @@ public abstract class ExcelParser<T> extends WithLogger {
     private final Workbook workbook;
     private final Sheet sheet;
 
+    /**
+     * Чтение Excel файла по байтам
+     *
+     * @param bytes - массив байтов
+     * @throws IOException   - исключения при чтении фалйа
+     */
+    public ExcelParser(byte[] bytes) throws IOException {
+        super("Parser");
+        this.wait("Чтение Excel файла по байтам...");
+        this.workbook = WorkbookFactory.create(new ByteArrayInputStream(bytes));
+        this.sheet = this.workbook.getSheetAt(0);
+        this.result(true);
+    }
+
     public ExcelParser(String path) throws IOException {
         super("Parser");
         this.wait("Получение Excel файла...");
-        if (path.endsWith(".xls")) {
-            this.workbook = new HSSFWorkbook(new FileInputStream(path));
-        } else {
-            this.workbook = new XSSFWorkbook(new FileInputStream(path));
-        }
+        this.workbook = WorkbookFactory.create(new FileInputStream(path));
         this.sheet = this.workbook.getSheetAt(0);
         this.result(true);
     }
@@ -103,7 +115,7 @@ public abstract class ExcelParser<T> extends WithLogger {
      *
      * @param rowIndex - индекс строки
      * @param colIndex - индекс колонки
-     * @param def - значение по умолчанию
+     * @param def      - значение по умолчанию
      * @return - значение или def
      */
     public String getStringValue(int rowIndex, int colIndex, String def) {
@@ -121,7 +133,7 @@ public abstract class ExcelParser<T> extends WithLogger {
      * @return - значение или null
      */
     @Nullable
-    public String getStringValue(int rowIndex, int colIndex){
+    public String getStringValue(int rowIndex, int colIndex) {
         return this.getStringValue(rowIndex, colIndex, null);
     }
 }
