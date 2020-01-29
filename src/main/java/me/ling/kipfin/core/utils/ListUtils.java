@@ -71,6 +71,21 @@ public class ListUtils {
     /**
      * Выполняет поиск по листу с помощью полей объекта
      *
+     * Пример использования:
+     * ```
+     * //...
+     * class Teacher{
+     *     public int id;
+     * }
+     * //...
+     *
+     * List<Teacher>teachers = List.of(new Teacher(1), new Teacher(2));
+     *
+     * ListUtils.contains(teachers, Teacher::id, 1) // true
+     * ListUtils.contains(teachers, Teacher::id, 2) // true
+     * ListUtils.contains(teachers, Teacher::id, 3) // false
+     * ```
+     *
      * @param list      - список
      * @param reference - ссылка
      * @param test      - тестируемое значение
@@ -78,7 +93,7 @@ public class ListUtils {
      * @param <P>       - тип тестируемого значение
      * @return - результат тестирования
      */
-    public static <T, P> boolean containsWhere(@NotNull List<T> list, Function<T, P> reference, P test) {
+    public static <T, P> boolean contains(@NotNull List<T> list, Function<T, P> reference, P test) {
         return ListUtils.contains(list, (Predicate<T>) s -> reference.apply(s).equals(test));
     }
 
