@@ -100,7 +100,7 @@ public class ListUtils {
 
     /**
      * Выполняет поиск по листу с помощью полей объекта. Поиск производится по "похожим элементам"
-     * <p>
+     *
      * Данное тестирование работает по принципу:
      * ```
      * var x = StringUtils.removeAllSpaces(a.toLoverCase());
@@ -121,7 +121,21 @@ public class ListUtils {
     }
 
     /**
-     * Возвращает элемент списка по критерию
+     * Возвращает <b>первое</b> значение из списка по предикату
+     *
+     * @param list      - лист
+     * @param predicate - предикат
+     * @param <T>       - тип листа
+     * @return          - возвращаемое значение
+     * @throws NotFoundEntityException  - объект не найден
+     */
+    public static <T> T get(@NotNull List<T> list, Predicate<T> predicate) throws NotFoundEntityException {
+        for (T item : list) if (predicate.test(item)) return item;
+        throw new NotFoundEntityException(" ПРЕДИКАТ ");
+    }
+
+    /**
+     * Возвращает <b>первое</b> значение из списка по критерию
      *
      * @param list      - список
      * @param reference - поле
@@ -138,8 +152,8 @@ public class ListUtils {
     }
 
     /**
-     * Возвращает элемент списка по НЕ строгому критерию
-     *
+     * Возвращает <b>первое</b> значение из списка по НЕ строгому критерию
+     * <p>
      * Данное тестирование работает по принципу:
      * ```
      * var x = StringUtils.removeAllSpaces(a.toLoverCase());

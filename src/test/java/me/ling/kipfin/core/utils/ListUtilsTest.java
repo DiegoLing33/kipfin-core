@@ -67,6 +67,9 @@ class ListUtilsTest {
     @Test
     void get() {
         assertEquals(ListUtils.get(teachers, Teacher::getName, "Пестов").getTeacherId(), 1);
+        assertEquals(ListUtils.getLike(teachers, Teacher::getName, "Пес").getTeacherId(), 1);
+        assertEquals(ListUtils.get(teachers, teacher -> teacher.getName().startsWith("П")).getTeacherId(), 1);
+
         assertThrows(NotFoundEntityException.class, () -> ListUtils.get(teachers, Teacher::getName, "Коля"));
     }
 }
