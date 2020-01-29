@@ -47,8 +47,8 @@ class ListUtilsTest {
     @Test
     void testContainsWhere() {
 
-        assertTrue(ListUtils.containsWhere(teachers, Teacher::getName, "Пестов"));
-        assertFalse(ListUtils.containsWhere(teachers, Teacher::getGroupId, 4));
+        assertTrue(ListUtils.contains(teachers, Teacher::getName, "Пестов"));
+        assertFalse(ListUtils.contains(teachers, Teacher::getGroupId, 4));
     }
 
     @Test
