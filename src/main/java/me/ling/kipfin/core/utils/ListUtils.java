@@ -1,5 +1,6 @@
 package me.ling.kipfin.core.utils;
 
+import me.ling.kipfin.exceptions.NotFoundEntityException;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.Reference;
@@ -70,17 +71,17 @@ public class ListUtils {
 
     /**
      * Выполняет поиск по листу с помощью полей объекта
-     *
+     * <p>
      * Пример использования:
      * ```
      * //...
      * class Teacher{
-     *     public int id;
+     * public int id;
      * }
      * //...
-     *
+     * <p>
      * List<Teacher>teachers = List.of(new Teacher(1), new Teacher(2));
-     *
+     * <p>
      * ListUtils.contains(teachers, Teacher::id, 1) // true
      * ListUtils.contains(teachers, Teacher::id, 2) // true
      * ListUtils.contains(teachers, Teacher::id, 3) // false
@@ -117,5 +118,47 @@ public class ListUtils {
     public static <T> boolean containsLike(@NotNull List<T> list, Function<T, String> reference, String like) {
         return ListUtils.contains(list, (Predicate<T>) s -> StringUtils.removeAllSpaces(reference.apply(s))
                 .toLowerCase().contains(StringUtils.removeAllSpaces(like.toLowerCase())));
+    }
+
+    /**
+     * Возвращает элемент списка по критерию
+     *
+     * @param list      - список
+     * @param reference - поле
+     * @param value     - значение
+     * @param <T>       - тип списка
+     * @param <P>       - тип значения
+     * @return - элемент
+     * @throws NotFoundEntityException - элемент не найден в списке
+     */
+    public static <T, P> T get(@NotNull List<T> list, Function<T, P> reference, P value) throws NotFoundEntityException {
+        for (T item : list)
+            if (reference.apply(item).equals(value)) return item;
+        throw new NotFoundEntityException(value);
+    }
+
+    /**
+     * Возвращает элемент списка по НЕ строгому критерию
+     *
+     * Данное тестирование работает по принципу:
+     * ```
+     * var x = StringUtils.removeAllSpaces(a.toLoverCase());
+     * var y = StringUtils.removeAllSpaces(b.toLoverCase());
+     * <p>
+     * var result = a.contains(b);
+     * ```
+     *
+     * @param list      - список
+     * @param reference - поле
+     * @param value     - значение
+     * @param <T>       - тип списка
+     * @return - элемент
+     * @throws NotFoundEntityException - элемент не найден в списке
+     */
+    public static <T> T getLike(@NotNull List<T> list, Function<T, String> reference, String value) throws NotFoundEntityException {
+        for (T item : list)
+            if (StringUtils.removeAllSpaces(reference.apply(item).toLowerCase()).contains(StringUtils.removeAllSpaces(value.toLowerCase())))
+                return item;
+        throw new NotFoundEntityException(value);
     }
 }
