@@ -72,4 +72,10 @@ class ListUtilsTest {
 
         assertThrows(NotFoundEntityException.class, () -> ListUtils.get(teachers, Teacher::getName, "Коля"));
     }
+
+    @Test
+    void createUnique() {
+        List<Integer> ints = List.of(1, 2, 3, 1, 4, 2, 1, 5);
+        assertEquals(ListUtils.createUnique(ints), List.of(1, 2, 3, 4, 5));
+    }
 }

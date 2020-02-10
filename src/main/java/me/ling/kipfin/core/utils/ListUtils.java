@@ -3,7 +3,7 @@ package me.ling.kipfin.core.utils;
 import me.ling.kipfin.exceptions.NotFoundEntityException;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.ref.Reference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -100,7 +100,7 @@ public class ListUtils {
 
     /**
      * Выполняет поиск по листу с помощью полей объекта. Поиск производится по "похожим элементам"
-     *
+     * <p>
      * Данное тестирование работает по принципу:
      * ```
      * var x = StringUtils.removeAllSpaces(a.toLoverCase());
@@ -126,8 +126,8 @@ public class ListUtils {
      * @param list      - лист
      * @param predicate - предикат
      * @param <T>       - тип листа
-     * @return          - возвращаемое значение
-     * @throws NotFoundEntityException  - объект не найден
+     * @return - возвращаемое значение
+     * @throws NotFoundEntityException - объект не найден
      */
     public static <T> T get(@NotNull List<T> list, Predicate<T> predicate) throws NotFoundEntityException {
         for (T item : list) if (predicate.test(item)) return item;
@@ -174,5 +174,21 @@ public class ListUtils {
             if (StringUtils.removeAllSpaces(reference.apply(item).toLowerCase()).contains(StringUtils.removeAllSpaces(value.toLowerCase())))
                 return item;
         throw new NotFoundEntityException(value);
+    }
+
+    /**
+     * Создает новый список из уникальных элементов списка list
+     *
+     * @param list - исходной список
+     * @param <T>  - тип списка
+     * @return - список уникальных элементов
+     */
+    @NotNull
+    public static <T> List<T> createUnique(@NotNull List<T> list) {
+        List<T> arrayList = new ArrayList<>();
+        list.forEach(item -> {
+            if (!arrayList.contains(item)) arrayList.add(item);
+        });
+        return arrayList;
     }
 }
