@@ -58,7 +58,7 @@ public class Bootloader extends WithLogger {
 
         /* Данные FTP */
         String ftpHost = env.get("ftp_host");
-        Integer ftpPort = Integer.parseInt(Objects.requireNonNull(env.get("ftp_port")));
+        Integer ftpPort = this.getEnvInteger("ftp_port", 21);
         String ftpLogin = env.get("ftp_login");
         String ftpPassword = env.get("ftp_password");
         String ftpRootDir = env.get("ftp_root");
@@ -131,7 +131,7 @@ public class Bootloader extends WithLogger {
         try {
             var val = this.getEnv().get(param);
             if (val == null) return def;
-            return Integer.valueOf(val);
+            return Integer.parseInt(val);
         } catch (Exception e) {
             return def;
         }
