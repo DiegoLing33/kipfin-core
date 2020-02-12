@@ -30,6 +30,7 @@ import me.ling.kipfin.database.users.UserAuthTokensDB;
 import me.ling.kipfin.database.users.UserDevTokensDB;
 import me.ling.kipfin.database.users.UserGroupsDB;
 import me.ling.kipfin.database.users.UsersDB;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -39,8 +40,16 @@ import java.util.Objects;
  */
 public class Bootloader extends WithLogger {
 
+    private final Dotenv env;
+
+    /**
+     * Конструктор
+     *
+     * @param env - env данные
+     */
     public Bootloader(Dotenv env) {
         super("Bootloader");
+        this.env = env;
 
         /* Данные SQL */
         String sqlUrl = env.get("sql_url");
@@ -68,6 +77,106 @@ public class Bootloader extends WithLogger {
     }
 
     /**
+     * Конструктор
+     */
+    public Bootloader() {
+        this(Dotenv.load());
+    }
+
+    /**
+     * Возвращает данные среды
+     *
+     * @return - env
+     */
+    public Dotenv getEnv() {
+        return env;
+    }
+
+    /**
+     * Возвращает строку из env
+     *
+     * @param param - параметр
+     * @param def   - значение по умолчанию
+     * @return значение параметра
+     */
+    @Nullable
+    public String getEnvString(String param, @Nullable String def) {
+        try {
+            return this.getEnv().get(param);
+        } catch (Exception e) {
+            return def;
+        }
+    }
+
+    /**
+     * Возвращает строку из env
+     *
+     * @param param - параметр
+     * @return значение параметра
+     */
+    @Nullable
+    public String getEnvString(String param) {
+        return this.getEnvString(param, null);
+    }
+
+    /**
+     * Возвращает число из env
+     *
+     * @param param - параметр
+     * @param def   - значение по умолчанию
+     * @return значение параметра
+     */
+    @Nullable
+    public Integer getEnvInteger(String param, @Nullable Integer def) {
+        try {
+            var val = this.getEnv().get(param);
+            if (val == null) return def;
+            return Integer.valueOf(val);
+        } catch (Exception e) {
+            return def;
+        }
+    }
+
+    /**
+     * Возвращает число из env
+     *
+     * @param param - параметр
+     * @return значение параметра
+     */
+    @Nullable
+    public Integer getEnvInteger(String param) {
+        return this.getEnvInteger(param, null);
+    }
+
+    /**
+     * Возвращает булевый тип из env
+     *
+     * @param param - параметр
+     * @param def   - значение по умолчанию
+     * @return значение параметра
+     */
+    public boolean getEnvBoolean(String param, boolean def) {
+        try {
+            var val = this.getEnv().get(param);
+            if (val == null) return def;
+            val = val.toLowerCase();
+            return val.equals("1") || val.equals("true") || val.equals("yes");
+        } catch (Exception e) {
+            return def;
+        }
+    }
+
+    /**
+     * Возвращает булевый тип из env
+     *
+     * @param param - параметр
+     * @return значение параметра
+     */
+    public boolean getEnvBoolean(String param) {
+        return this.getEnvBoolean(param, false);
+    }
+
+    /**
      * Обновление баз данных
      *
      * @param extended - полная загрузка данных
@@ -77,7 +186,7 @@ public class Bootloader extends WithLogger {
         this.log(Logger.WAIT, "Подключение к MySQL...");
         TeachersDB.shared.update();
         GroupsDB.shared.update();
-        if(extended){
+        if (extended) {
             UsersDB.shared.update();
             UserGroupsDB.shared.update();
             UserAuthTokensDB.shared.update();
