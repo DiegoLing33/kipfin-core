@@ -17,28 +17,22 @@
  *
  */
 
-package me.ling.kipfin.abstracts;
+package me.ling.kipfin.core.parsers
 
-import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Test
 
-/**
- * Индексируемый объект
- */
-public abstract class Indexable<T> implements Comparable<Indexable<T>> {
+import org.junit.jupiter.api.Assertions.*
 
-    /**
-     * Возвращает индекс объекта
-     * @return  - индекс
-     */
-    public abstract Integer getIndex();
+internal class ExcelFileParserTest {
 
-    /**
-     * Выполняет сравнение
-     * @param o - объект
-     * @return  - результат сравнения
-     */
-    @Override
-    public int compareTo(@NotNull Indexable<T> o) {
-        return this.getIndex().compareTo(o.getIndex());
+    @Test
+    fun getCell() {
+
+        val parser = ExcelFileParser("./src/test/resources/c.xlsx")
+        val cell = parser.getCell(1, 0)
+
+        assertEquals("Преподаватели", parser.getString(1, 0))
+        assertEquals("314", parser.getString(5, 1))
+
     }
 }

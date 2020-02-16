@@ -17,52 +17,12 @@
  *
  */
 
-package me.ling.kipfin.core.entities.university;
+package me.ling.kipfin.database.university
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
 
-/**
- * Сущность преподавателя
- */
-public class Teacher {
-
-    @JsonProperty("teacher_id")
-    private Integer teacherId;
-
-    @JsonProperty("teacher_group_id")
-    private Integer groupId;
-
-    @JsonProperty("teacher_name")
-    private String name;
-
-    public Teacher(){}
-    public Teacher(Integer teacherId, Integer groupId, String name) {
-        this.teacherId = teacherId;
-        this.groupId = groupId;
-        this.name = name;
-    }
-
-    /**
-     * Возвращает ID преподавателя
-     * @return ID преподавателя
-     */
-    public Integer getTeacherId() {
-        return teacherId;
-    }
-
-    /**
-     * Возвращает ID курируемой группы преподавателями
-     * @return - ID группы
-     */
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    /**
-     * Возвращает имя преподавателя
-     * @return - имя преподавателя
-     */
-    public String getName() {
-        return name;
-    }
+object Teachers: IntIdTable() {
+    val name: Column<String> = varchar("teacher_name", 255)
+    val groupId: Column<Int> = integer("teacher_group_id")
 }

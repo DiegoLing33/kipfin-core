@@ -17,52 +17,19 @@
  *
  */
 
-package me.ling.kipfin.core.entities.university;
+package me.ling.kipfin.abstracts
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-/**
- * Сущность преподавателя
- */
-public class Teacher {
-
-    @JsonProperty("teacher_id")
-    private Integer teacherId;
-
-    @JsonProperty("teacher_group_id")
-    private Integer groupId;
-
-    @JsonProperty("teacher_name")
-    private String name;
-
-    public Teacher(){}
-    public Teacher(Integer teacherId, Integer groupId, String name) {
-        this.teacherId = teacherId;
-        this.groupId = groupId;
-        this.name = name;
-    }
+abstract class Indexable<T>: Comparable<Indexable<T>> {
 
     /**
-     * Возвращает ID преподавателя
-     * @return ID преподавателя
+     * Возвраща индекс объекта
      */
-    public Integer getTeacherId() {
-        return teacherId;
-    }
+    abstract fun getIndex(): Int
 
     /**
-     * Возвращает ID курируемой группы преподавателями
-     * @return - ID группы
+     * Выполняет сравнение объекта
      */
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    /**
-     * Возвращает имя преподавателя
-     * @return - имя преподавателя
-     */
-    public String getName() {
-        return name;
+    override fun compareTo(other: Indexable<T>): Int {
+        return this.getIndex().compareTo(other.getIndex())
     }
 }

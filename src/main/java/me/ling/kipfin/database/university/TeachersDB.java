@@ -21,11 +21,9 @@ package me.ling.kipfin.database.university;
 
 import me.ling.kipfin.core.EntityDB;
 import me.ling.kipfin.core.entities.university.Teacher;
-import me.ling.kipfin.core.managers.SQLManager;
 import me.ling.kipfin.core.sql.SQLObjectMapper;
 import me.ling.kipfin.exceptions.university.TeacherNotFoundException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
 import java.util.Map;

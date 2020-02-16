@@ -17,52 +17,28 @@
  *
  */
 
-package me.ling.kipfin.core.entities.university;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package me.ling.kipfin.core.utils
 
 /**
- * Сущность преподавателя
+ * Удаляет все лишние пробелы
  */
-public class Teacher {
+fun String.removeAllSpaces(): String = this.replace(Regex("^\\s+|\\s+$"), "").replace(Regex("\\s+"), " ")
 
-    @JsonProperty("teacher_id")
-    private Integer teacherId;
+/**
+ * Делает первую букву загловной
+ */
+fun String.title(): String = this.substring(0, 1).toUpperCase() + this.substring(1)
 
-    @JsonProperty("teacher_group_id")
-    private Integer groupId;
-
-    @JsonProperty("teacher_name")
-    private String name;
-
-    public Teacher(){}
-    public Teacher(Integer teacherId, Integer groupId, String name) {
-        this.teacherId = teacherId;
-        this.groupId = groupId;
-        this.name = name;
-    }
-
-    /**
-     * Возвращает ID преподавателя
-     * @return ID преподавателя
-     */
-    public Integer getTeacherId() {
-        return teacherId;
-    }
-
-    /**
-     * Возвращает ID курируемой группы преподавателями
-     * @return - ID группы
-     */
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    /**
-     * Возвращает имя преподавателя
-     * @return - имя преподавателя
-     */
-    public String getName() {
-        return name;
-    }
+/**
+ * Возвращает рандомную строку
+ */
+fun String.randomString(n: Int): String {
+    val sb = StringBuilder(n)
+    for (i in 0 until n) sb.append(this[(this.length * Math.random()).toInt()])
+    return sb.toString()
 }
+
+/**
+ * Возвращает случайную строку размера n
+ */
+fun String.Companion.getAlphaNumericString(n: Int): String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz".randomString(n)

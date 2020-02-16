@@ -26,7 +26,7 @@ public class SQLObjectMapper {
      * @throws SQLException - исключения при работе SQL
      */
     public static <T> Map<Integer, T> selectAllAndMap(Class<T> tClass, String table, String colWithId) throws SQLException {
-        return SQLManager.selectAllAndMap(table, colWithId, resultSet -> SQLObjectMapper.map(tClass, resultSet));
+        return SQLManager.INSTANCE.selectAllAndMap(table, colWithId, resultSet -> SQLObjectMapper.map(tClass, resultSet));
     }
 
     /**

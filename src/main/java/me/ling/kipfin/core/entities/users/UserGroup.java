@@ -1,22 +1,18 @@
 package me.ling.kipfin.core.entities.users;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import me.ling.kipfin.core.sql.Column;
 
 /**
  * Группа пользователя
  */
 public class UserGroup {
 
-    @Column(name = "group_id", type = Integer.class)
     @JsonProperty("group_id")
     protected Integer groupId;
 
-    @Column(name = "title")
     @JsonProperty("group_title")
     protected String title;
 
-    @Column(name = "access")
     @JsonProperty("group_access")
     protected String access;
 

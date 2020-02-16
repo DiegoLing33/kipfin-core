@@ -17,52 +17,57 @@
  *
  */
 
-package me.ling.kipfin.core.entities.university;
+package me.ling.kipfin.core.managers
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import me.ling.kipfin.core.log.Logger
+import me.ling.kipfin.core.log.LoggerColors
+import java.sql.Connection
+import java.sql.DriverManager
+import java.sql.ResultSet
 
 /**
- * Сущность преподавателя
+ * Менеджер SQL
  */
-public class Teacher {
+object SQLManager {
 
-    @JsonProperty("teacher_id")
-    private Integer teacherId;
+    private var url: String = ""
+    private var user: String = ""
+    private var password: String = ""
 
-    @JsonProperty("teacher_group_id")
-    private Integer groupId;
-
-    @JsonProperty("teacher_name")
-    private String name;
-
-    public Teacher(){}
-    public Teacher(Integer teacherId, Integer groupId, String name) {
-        this.teacherId = teacherId;
-        this.groupId = groupId;
-        this.name = name;
+    /**
+     * Инициилизирует менеджер
+     */
+    fun init(url: String, user: String, password: String) {
+        this.url = url
+        this.user = user
+        this.password = password
     }
 
     /**
-     * Возвращает ID преподавателя
-     * @return ID преподавателя
+     * Возвращает соединение. Использует стандартное подключение в объекте
      */
-    public Integer getTeacherId() {
-        return teacherId;
+    fun getConnection(): Connection? {
+        return DriverManager.getConnection(this.url, this.user, this.password)
     }
 
     /**
-     * Возвращает ID курируемой группы преподавателями
-     * @return - ID группы
+     * Делает полную выборку из таблицы
      */
-    public Integer getGroupId() {
-        return groupId;
+    fun selectAll(table: String, handler: (ResultSet) -> Unit) {
+        val connection = this.getConnection() ?: return
+        Logger.logAs("SQL", "Загрузка данных из таблицы", LoggerColors.getColoredString(LoggerColors.ANSI_CYAN, table))
+        val resultSet = connection.createStatement().executeQuery("SELECT  * FROM $table")
+        while (resultSet.next()) handler(resultSet)
     }
 
     /**
-     * Возвращает имя преподавателя
-     * @return - имя преподавателя
+     * Делает полную выборку и приводит к типу
      */
-    public String getName() {
-        return name;
+    fun <T> selectAllAndMap(table: String, colId: String, callback: (ResultSet) -> T): Map<Int, T> {
+        val map = mutableMapOf<Int, T>()
+        this.selectAll(table) {
+            map[it.getInt(colId)] = callback(it)
+        }
+        return map
     }
 }

@@ -1,38 +1,30 @@
 package me.ling.kipfin.core.entities.users;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import me.ling.kipfin.core.sql.Column;
 
 /**
  * Токен авторизации пользователя
  */
 public class UserAuthToken {
 
-    @Column(name = "token_id", type = Integer.class)
     @JsonProperty("token_id")
     protected Integer tokenId;
 
-    @Column(name = "user_id", type = Integer.class)
     @JsonProperty("token_user_id")
     protected Integer userId;
 
-    @Column(name = "token")
     @JsonProperty("token_string")
     protected String token;
 
-    @Column(name = "state", type = Integer.class)
     @JsonProperty("token_state")
     protected Integer state;
 
-    @Column(name = "ip")
     @JsonProperty("token_ip")
     protected String ip;
 
-    @Column(name = "agent")
     @JsonProperty("token_agent")
     protected String agent;
 
-    @Column(name = "date")
     @JsonProperty("token_date")
     protected String date;
 

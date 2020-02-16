@@ -33,7 +33,6 @@ import me.ling.kipfin.database.users.UsersDB;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
-import java.util.Objects;
 
 /**
  * Загрузчик
@@ -64,7 +63,7 @@ public class Bootloader extends WithLogger {
         String ftpRootDir = env.get("ftp_root");
 
         this.log("Установка настроек...");
-        SQLManager.setUp(sqlUrl, sqlLogin, sqlPassword);
+        SQLManager.INSTANCE.init(sqlUrl, sqlLogin, sqlPassword);
         FTPManager.setUp(ftpLogin, ftpPassword, ftpHost, ftpPort, ftpRootDir);
 
         GroupsDB.TABLE_NAME = env.get("sql.tables.groups");
