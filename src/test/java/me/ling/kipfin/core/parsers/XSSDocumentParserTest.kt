@@ -23,12 +23,12 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 
-internal class ExcelFileParserTest {
+internal class XSSDocumentParserTest {
 
     @Test
     fun getCell() {
 
-        val parser = ExcelFileParser("./src/test/resources/c.xlsx")
+        val parser = XSSDocumentParser("./src/test/resources/c.xlsx")
         val cell = parser.getCell(1, 0)
 
         assertEquals("Преподаватели", parser.getString(1, 0))

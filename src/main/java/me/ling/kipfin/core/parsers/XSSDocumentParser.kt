@@ -29,7 +29,7 @@ import java.io.IOException
 /**
  * Парсер excel файлов
  */
-class ExcelFileParser : WithLogger {
+class XSSDocumentParser : WithLogger {
 
     private var workbook: Workbook
     private var sheet: Sheet
